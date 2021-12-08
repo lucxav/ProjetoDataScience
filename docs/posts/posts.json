@@ -15,5 +15,22 @@
     "preview": {},
     "last_modified": "2021-12-08T00:08:02-03:00",
     "input_file": {}
+  },
+  {
+    "path": "posts/2021-12-08-anlise-da-base-rais/",
+    "title": "Análise da base RAIS",
+    "description": "Esse projeto teve como objetivo analisar os salários na base da RAIS. Esse projeto foi feito na \"Semana Data Science na Prática\" da Curso-R",
+    "author": [
+      {
+        "name": "Lucas Xavier",
+        "url": {}
+      }
+    ],
+    "date": "2021-12-08",
+    "categories": [],
+    "contents": "\r\nEsse é o meu primeiro projeto.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-12-08T00:19:31-03:00",
+    "input_file": "anlise-da-base-rais.knit.md"
   }
 ]

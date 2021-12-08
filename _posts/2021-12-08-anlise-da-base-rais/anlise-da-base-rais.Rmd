@@ -1,0 +1,18 @@
+---
+title: "Análise da base RAIS"
+description: |
+  Esse projeto teve como objetivo analisar os salários na base da RAIS. Esse projeto foi feito na "Semana Data Science na Prática" da Curso-R
+author:
+  - name: Lucas Xavier
+date: 2021-12-08
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+  Esse é o meu primeiro projeto. 
