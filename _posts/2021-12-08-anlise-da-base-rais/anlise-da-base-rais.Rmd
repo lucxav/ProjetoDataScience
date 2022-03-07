@@ -131,6 +131,8 @@ Como variam os salários médios no tempo?
 
 ```{r}
 
+tabela_microdados_vinculos <- readRDS("tabela_microdados_vinculos.rds")
+
 library(ggplot2)
 
 tabela_medias <- tabela_microdados_vinculos %>%  
@@ -162,6 +164,123 @@ readr::write_rds(tabela_microdados_vinculos,
 ```
 
 
+### Quanto o salário médio varia regionalmente? 
+
+```{r}
+
+tabela_media_uf <- tabela_microdados_vinculos %>% 
+  group_by(sigla_uf) %>% 
+  summarise(
+    media = mean(valor_remuneracao_media)
+  )
+
+```
+
+Essa visualização a princípio é melhor em tabela:
+
+```{r}
+
+knitr::kable(tabela_media_uf)
+
+```
 
 
+Agora olhando em gráficos:
+
+```{r}
+
+tabela_media_uf %>% 
+  ggplot(aes(x= sigla_uf, y= media))+
+  geom_col()
+```
+
+Esse gráfico permite avaliar que a média salarial do DF e do RJ aparentam ser maior do que dos demais estados, conforme destaca o gráfico abaixo: 
+
+```{r}
+
+# Reordenando as colunas de forma a representar a media salarial por uf na ordem crescente
+
+library(forcats)
+
+tabela_media_uf %>%  
+  mutate(
+    sigla_uf = fct_reorder(sigla_uf,media)   # 'Arrange' também é válido
+  ) %>% 
+  ggplot(aes(x=media, y = sigla_uf))+
+  geom_col()+
+  labs(
+    y = "Unidade da Federação",
+    x = "Média Salárial (R$)"
+  )
+
+```
+
+### Os salários variam por sexo?
+
+```{r}
+
+tabela_resumo_sexo <- tabela_microdados_vinculos %>% 
+  group_by(sexo) %>% 
+  summarise(
+    media = mean(valor_remuneracao_media)
+  )
+  
+  tabela_resumo_sexo %>%  knitr::kable()
+  
+  #1 - masculino 
+  #2 - Feminino
+```
+
+### Os salários variam por etnia? 
+
+```{r}
+
+tabela_resumo_etnia <- tabela_microdados_vinculos %>% 
+  group_by(raca_cor) %>% 
+  summarise(
+    media = mean(valor_remuneracao_media)
+  )
+
+tabela_resumo_etnia %>%  knitr::kable()
+
+
+# 1 -Indigena 2 -Branco 4-Preto 6 -Amarelo 8 -Pardo 9 -Não identificado
+```
+
+```{r}
+
+tabela_resumo_sexo_raca_cor <- tabela_microdados_vinculos %>% 
+  group_by(raca_cor, sexo) %>% 
+  summarise(
+    media = mean(valor_remuneracao_media), 
+    mediana = median(valor_remuneracao_media)
+  )
+
+tabela_resumo_sexo_raca_cor %>%  knitr::kable()
+
+```
+
+```{r}
+
+ggplot(tabela_resumo_sexo_raca_cor,
+       aes(x=raca_cor, y=media, fill = sexo))+
+  geom_col(position = 'dodge')+
+  theme_bw()
+
+```
+
+### Qual é a distribuição dos salários da base?
+
+
+```{r}
+
+tabela_microdados_vinculos %>% 
+  filter(valor_remuneracao_media > 0 ) %>% 
+  ggplot(aes(x= log(valor_remuneracao_media)))+
+  geom_histogram()+
+  facet_wrap(~cbo_2002)
+
+
+
+```
 
